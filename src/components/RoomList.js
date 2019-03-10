@@ -21,12 +21,14 @@ class RoomList extends Component {
 
       render(){ 
         return( 
+          <div> 
           <section>
         {this.state.rooms.map((room, index) => 
-         <li className= "roomList"  key = {index}>{room.name}</li> 
+         <li key = {index}>{room.name}</li> 
            ) 
           }
          </section>
+        </div>
          );
         }
       }
