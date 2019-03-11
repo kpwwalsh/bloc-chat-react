@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+ 
 
 
 class RoomList extends Component {
@@ -19,16 +20,15 @@ class RoomList extends Component {
       } 
 
 
+      
       render(){ 
         return( 
-          <div> 
           <section>
         {this.state.rooms.map((room, index) => 
          <li key = {index}>{room.name}</li> 
            ) 
           }
          </section>
-        </div>
          );
         }
       }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
+import * as uuid from 'uuid';
 
   var config = {
     apiKey: "AIzaSyAX0XklFlFeiqQ_Rsw88_iuGpPnvdy6UH0",
