@@ -22,6 +22,7 @@ class RoomList extends Component {
       } 
 
       createRoom(e){
+        e.preventDefault();
         this.roomsRef.push({
           name: this.state.newRoomName
         });
@@ -32,7 +33,7 @@ class RoomList extends Component {
         const newName= e.target.value;
         this.setState({
         newRoomName: newName  
-        })
+        });
       }
       
       render(){ 
@@ -40,7 +41,7 @@ class RoomList extends Component {
           <div>
           <section>
            {this.state.rooms.map((room, index) => 
-           <li key = {index}>{room.name}</li> 
+           <li key ={room.key} onClick={()=>this.props.setActiveRoom(index)}>{room.name}</li> 
             ) 
             }
           </section>
@@ -52,7 +53,7 @@ class RoomList extends Component {
               value={this.state.newRoomName}
               onChange={(e)=> this.handleChange(e)}
              />
-             <input type="submit"/>
+             <button type="submit">Make Za Room</button>/>
            </form>
            </section>    
            </div> 
