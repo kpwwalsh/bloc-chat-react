@@ -20,6 +20,7 @@ class App extends Component {
     super(props);
     this.state={
       activeRoom: '',
+      userName: '',
     }
     this.setActiveRoom= this.setActiveRoom.bind(this);
   };
@@ -31,12 +32,15 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Start Chattin Capin!</h1>
-        <h2>{this.state.activeRoom.name}</h2>( 
-        <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />)
+        <h1>ChatAt</h1>
+        <h2>{this.state.activeRoom.name}</h2>
+        <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
          { this.state.activeRoom}
-          (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key} />)
-        })
+         <MessageList
+          firebase={firebase}
+          activeRoom={this.state.activeRoom}
+          userName={this.state.userName}
+        />
       </div>
     );
   }

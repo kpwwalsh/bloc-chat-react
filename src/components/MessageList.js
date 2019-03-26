@@ -10,7 +10,7 @@ class MessageList extends Component {
             sentAt: '',
             roomId: ''
           };
-        this.messagesRef = this.props.firebase.database().ref('messages');  
+        this.messagesRef = this.props.firebase.database().ref('Messages');  
         this.createMessage= this.createMessage.bind(this);
         this.handleChange=this.handleChange.bind(this);
      }
@@ -19,7 +19,7 @@ class MessageList extends Component {
         this.messagesRef.on('child_added', snapshot => {
         const message = snapshot.val();
         message.key = snapshot.key;
-        this.setState({ messages: this.state.rooms.concat( message ) })
+        this.setState({ messages: this.state.messages.concat( message ) })
         });
       } 
     
@@ -37,10 +37,10 @@ class MessageList extends Component {
       handleChange(e){
          e.preventDefault();
          this.setState({
-             username: 'this.props.userName',
+             username: this.props.userName,
              content:  e.target.value,
              sentAt:   this.props.firebase.database.ServerValue.TIMESTAMP,
-             roomId:   this.props.setActiveRoom
+             roomId:   this.props.activeRoom
           });
        }
 
@@ -48,8 +48,8 @@ class MessageList extends Component {
          return(
            <div>
              <ul>
-               {this.state.messages.filter( (message) => {
-                 if (message.roomId === this.props.setActiveRoom) {
+               {this.state.messages.map( (message) => {
+                 if (message.roomId === this.props.activeRoom) {
                    return <li key={ message.key }>{message.content} <br />
                      <span><h3>{message.username}</h3></span>
                    </li>
@@ -60,7 +60,7 @@ class MessageList extends Component {
              </ul>
              <form onSubmit={this.createMessage}>
                <input type="text" value={this.state.content} onChange={this.handleChange} />
-               <input type="submit" value="Submit Message" />
+               <input type="submit" value="Submit Message Now gd!!!" />
              </form>
            </div>
          );
