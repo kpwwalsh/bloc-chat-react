@@ -19,28 +19,27 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      activeRoom:{key:0, name:"" }
+      activeRoom: '',
     }
     this.setActiveRoom= this.setActiveRoom.bind(this);
   };
 
-  setActiveRoom(){
-    this.setState.activeRoom({activeRoom:"room"})
+  setActiveRoom(room){
+    this.setState({activeRoom: room})
   }
 
   render() {
     return (
-      <div className="App">
-        <RoomList firebase={firebase}
-          setActiveRoom={function(newActiveRoom) {
-            this.setState({ activeRoom: newActiveRoom });
-          }.bind(this)}
-        />
-        <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
+      <div>
+        <h1>Start Chattin Capin!</h1>
+        <h2>{this.state.activeRoom.name}</h2>( 
+        <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />)
+         { this.state.activeRoom}
+          (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key} />)
+        })
       </div>
     );
   }
 }
 
 export default App;
-

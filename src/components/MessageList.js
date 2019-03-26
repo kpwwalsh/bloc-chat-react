@@ -4,15 +4,15 @@ class MessageList extends Component {
     constructor(props){
         super(props)
         this.state = {
-           messages: [],
-           username:  '',
-            content:  '',
-            sentAt:  '',
-            roomId:  ''
+            messages: [],
+            username: '',
+            content: '',
+            sentAt: '',
+            roomId: ''
           };
         this.messagesRef = this.props.firebase.database().ref('messages');  
-        this.createMessage= this.props.createMessage.bind(this);
-        this.handleChange=this.props.handleChange.bind(this);
+        this.createMessage= this.createMessage.bind(this);
+        this.handleChange=this.handleChange.bind(this);
      }
 
      componentDidMount() {
@@ -22,7 +22,7 @@ class MessageList extends Component {
         this.setState({ messages: this.state.rooms.concat( message ) })
         });
       } 
-
+    
       createMessage(e){
          e.preventDefault();
          this.messagesRef.push({
@@ -31,21 +31,16 @@ class MessageList extends Component {
             sentAt: this.state.sentAt,
             roomId: this.state.roomId
         });
-         this.setState({
-            username: ({ username:'username'}),
-             content: ({content:'content'}),
-             sentAt:  ({sentAt:'sentAt'}),
-             roomId:  ({roomId:'roomId'})
-         });
+      this.setState({ username: '', content: '', sentAt:  '', roomId: ''});
          } 
 
       handleChange(e){
          e.preventDefault();
-         this.setState.push({
-            username:  this.props.username,
+         this.setState({
+             username: 'this.props.userName',
              content:  e.target.value,
              sentAt:   this.props.firebase.database.ServerValue.TIMESTAMP,
-             roomId:   this.props.roomId
+             roomId:   this.props.setActiveRoom
           });
        }
 
@@ -53,7 +48,7 @@ class MessageList extends Component {
          return(
            <div>
              <ul>
-               {this.state.messages.map( (message) => {
+               {this.state.messages.filter( (message) => {
                  if (message.roomId === this.props.setActiveRoom) {
                    return <li key={ message.key }>{message.content} <br />
                      <span><h3>{message.username}</h3></span>
@@ -65,7 +60,7 @@ class MessageList extends Component {
              </ul>
              <form onSubmit={this.createMessage}>
                <input type="text" value={this.state.content} onChange={this.handleChange} />
-               <input type="submit" value="Submit" />
+               <input type="submit" value="Submit Message" />
              </form>
            </div>
          );
