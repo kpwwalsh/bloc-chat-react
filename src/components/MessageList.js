@@ -6,9 +6,10 @@ class MessageList extends Component {
         this.state = {
             messages: [],
             username: '',
-            content: '',
+            displayName: this.props.currentUser,
+            value: '',
             sentAt: '',
-            roomId: ''
+            roomId: '',
           };
         this.messagesRef = this.props.firebase.database().ref('Messages');  
         this.createMessage= this.createMessage.bind(this);
@@ -24,24 +25,28 @@ class MessageList extends Component {
       } 
     
       createMessage(e){
-         e.preventDefault();
+         e.preventDefault()
          this.messagesRef.push({
-            username: this.state.username,
-            content: this.state.content,
-            sentAt: this.state.sentAt,
-            roomId: this.state.roomId
-        });
-      this.setState({ username: '', content: '', sentAt:  '', roomId: ''});
-         } 
-
-      handleChange(e){
-         e.preventDefault();
-         this.setState({
-             username: this.props.userName,
-             content:  e.target.value,
+             username: this.props.user.displayName,
+             content: this.state.value,
              sentAt:   this.props.firebase.database.ServerValue.TIMESTAMP,
              roomId:   this.props.activeRoom
-          });
+        });
+        this.setState({value:""});
+      }
+
+      handleChange(e){
+        e.preventDefault();
+        this.setState({
+          value: e.target.value
+        })
+      }
+
+          onSubmit(e) {
+          e.preventDefault();
+            this.messageRef.push({
+              message: this.state.content,
+            });   
        }
 
        render() {
@@ -58,8 +63,8 @@ class MessageList extends Component {
                  })
                }
              </ul>
-             <form onSubmit={this.createMessage}>
-               <input type="text" value={this.state.content} onChange={this.handleChange} />
+             <form onSubmit={(e)=> this.createMessage(e)}>
+               <input type="text" value={this.state.value} onChange={(e)=>this.handleChange(e)} />
                <input type="submit" value="Submit Message Now gd!!!" />
              </form>
            </div>
